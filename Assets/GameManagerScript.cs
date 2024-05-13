@@ -49,13 +49,46 @@ public class GameManagerScript : MonoBehaviour
         return true;
     }
 
+    bool IsCleard()
+    {
+        // Vector2Int型の可変長配列の作成
+        List<Vector2Int> goals = new List<Vector2Int>();
+
+        for(int y = 0; y < map.GetLength(0); y++)
+        {
+            for(int x = 0; x < map.GetLength(1); x++)
+            {
+                // 格納場所か否かを確認
+                if (map[y, x] == 3)
+                {
+                    // 格納場所のインデックスを控えておく
+                    goals.Add(new Vector2Int(x, y));
+                }
+            }
+        }
+        // 要素数はgoals.constで獲得
+        for(int i = 0; i < goals.Count; i++)
+        {
+            GameObject f = field[goals[i].y, goals[i].x];
+            if (f == null || f.tag != "Box")
+            {
+                // 一つでも箱が無かったら条件未達成
+                return false;
+            }
+        }
+        // でなければ条件達成
+        return true;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         // mapの生成
         map = new int[,] {
-          {1,0,0,0,0 },
-          {0,2,2,2,0,},
+          {0,0,0,0,0 },
+          {0,3,1,3,0,},
+          {0,0,2,0,0 },
+          {0,2,3,2,0 },
           {0,0,0,0,0 }
         };
         // フィールドサイズ決定
@@ -96,21 +129,38 @@ public class GameManagerScript : MonoBehaviour
         {
             Vector2Int playerIndex = GetPlayerIndex();
             MoveNumber(playerIndex, playerIndex + new Vector2Int(0, -1));
+            // もしクリアしていたら
+            if (IsCleard())
+            {
+                Debug.Log("Clear");
+            }
         }
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             Vector2Int playerIndex = GetPlayerIndex();
             MoveNumber(playerIndex, playerIndex + new Vector2Int(0, 1));
+            if (IsCleard())
+            {
+                Debug.Log("Clear");
+            }
         }
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             Vector2Int playerIndex = GetPlayerIndex();
             MoveNumber(playerIndex, playerIndex + new Vector2Int(1, 0));
+            if (IsCleard())
+            {
+                Debug.Log("Clear");
+            }
         }
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             Vector2Int playerIndex = GetPlayerIndex();
             MoveNumber(playerIndex, playerIndex + new Vector2Int(-1, 0));
+            if (IsCleard())
+            {
+                Debug.Log("Clear");
+            }
         }
     }
 }
