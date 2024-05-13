@@ -10,6 +10,9 @@ public class GameManagerScript : MonoBehaviour
 {
     public GameObject playerPrefab;
     public GameObject boxPrefab;
+
+
+    public GameObject clearText;
     int[,] map;
     GameObject[,] field;
 
@@ -132,7 +135,8 @@ public class GameManagerScript : MonoBehaviour
             // もしクリアしていたら
             if (IsCleard())
             {
-                Debug.Log("Clear");
+                // ゲームオブジェクトのSetActiveメソッドを使い有効化
+                clearText.SetActive(true);
             }
         }
         if (Input.GetKeyDown(KeyCode.DownArrow))
@@ -141,7 +145,7 @@ public class GameManagerScript : MonoBehaviour
             MoveNumber(playerIndex, playerIndex + new Vector2Int(0, 1));
             if (IsCleard())
             {
-                Debug.Log("Clear");
+                clearText.SetActive(true);
             }
         }
         if (Input.GetKeyDown(KeyCode.RightArrow))
@@ -150,7 +154,7 @@ public class GameManagerScript : MonoBehaviour
             MoveNumber(playerIndex, playerIndex + new Vector2Int(1, 0));
             if (IsCleard())
             {
-                Debug.Log("Clear");
+                clearText.SetActive(true);
             }
         }
         if (Input.GetKeyDown(KeyCode.LeftArrow))
@@ -159,7 +163,7 @@ public class GameManagerScript : MonoBehaviour
             MoveNumber(playerIndex, playerIndex + new Vector2Int(-1, 0));
             if (IsCleard())
             {
-                Debug.Log("Clear");
+                clearText.SetActive(true);
             }
         }
     }
