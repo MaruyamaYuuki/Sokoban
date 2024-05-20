@@ -16,18 +16,18 @@ public class GameManagerScript : MonoBehaviour
     int[,] map;
     GameObject[,] field;
 
-    private Vector2Int GetPlayerIndex()
+    Vector2Int GetPlayerIndex()
     {
         for (int y = 0; y < field.GetLength(0); y++)
         {
            for (int x = 0; x < field.GetLength(1); x++)
-            {
+           {
                 if (field[y, x] == null) { continue; }
                 if (field[y, x].tag == "Player")
                 {
                     return new Vector2Int(x,y);
                 }
-            }
+           }
         }
         return new Vector2Int(-1, -1);
     }
@@ -46,8 +46,15 @@ public class GameManagerScript : MonoBehaviour
         }
         // プレイヤー・箱関わらず移動処理
         field[moveTo.y, moveTo.x] = field[moveFrom.y, moveFrom.x];
-        field[moveFrom.y, moveFrom.x].transform.position =
-            new Vector3(moveTo.x, field.GetLength(0) - moveTo.y, 0);
+        //field[moveFrom.y, moveFrom.x].transform.position =
+            //new Vector3(moveTo.x, field.GetLength(0) - moveTo.y, 0);
+        Vector3 moveToPosition = new Vector3(
+            moveTo.x, map.GetLength(0) - moveTo.y, 0);
+        Move check = field[moveFrom.y, moveFrom.x].GetComponent<Move>();
+        if(check == null) {
+            Debug.Log("null");
+        }
+        field[moveFrom.y, moveFrom.x].GetComponent<Move>().MoveTo(moveToPosition);
         field[moveFrom.y, moveFrom.x] = null;
         return true;
     }
