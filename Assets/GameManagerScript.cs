@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.VisualScripting;
-using UnityEditor.Compilation;
-using UnityEditor.Timeline;
 using UnityEngine;
 
 public class GameManagerScript : MonoBehaviour
@@ -15,6 +13,7 @@ public class GameManagerScript : MonoBehaviour
     public GameObject clearText;
     int[,] map;
     GameObject[,] field;
+    Vector3 centeroffset;
 
     Vector2Int GetPlayerIndex()
     {
@@ -49,7 +48,7 @@ public class GameManagerScript : MonoBehaviour
         //field[moveFrom.y, moveFrom.x].transform.position =
             //new Vector3(moveTo.x, field.GetLength(0) - moveTo.y, 0);
         Vector3 moveToPosition = new Vector3(
-            moveTo.x, map.GetLength(0) - moveTo.y, 0);
+            moveTo.x, map.GetLength(0) - moveTo.y, 0) - centeroffset;
         Move check = field[moveFrom.y, moveFrom.x].GetComponent<Move>();
         if(check == null) {
             Debug.Log("null");
@@ -109,6 +108,7 @@ public class GameManagerScript : MonoBehaviour
             map.GetLength(1)
         ];
         // map‚É‰ž‚¶‚Ä•`‰æ
+        centeroffset = new Vector3(map.GetLength(1) / 2.0f, map.GetLength(0) / 2.0f, 0);
         for (int y = 0; y < map.GetLength(0); y++)
         {
             for (int x = 0; x < map.GetLength(1); x++)
@@ -117,7 +117,7 @@ public class GameManagerScript : MonoBehaviour
                 {
                     field[y, x] = Instantiate(
                         playerPrefab,
-                        new Vector3(x, map.GetLength(0) - y, 0.0f),
+                        new Vector3(x, map.GetLength(0) - y, 0.0f) - centeroffset,
                         Quaternion.identity
                     );
                 }
@@ -125,7 +125,7 @@ public class GameManagerScript : MonoBehaviour
                 {
                     field[y, x] = Instantiate(
                         boxPrefab,
-                        new Vector3(x, map.GetLength(0) - y, 0.0f),
+                        new Vector3(x, map.GetLength(0) - y, 0.0f) - centeroffset,
                         Quaternion.identity
                     );
                 }
@@ -133,7 +133,7 @@ public class GameManagerScript : MonoBehaviour
                 {
                     GameObject instance = Instantiate(
                         goalPrefab,
-                        new Vector3(x, map.GetLength(0) - y, 0.01f),
+                        new Vector3(x, map.GetLength(0) - y, 0.01f) - centeroffset,
                         Quaternion.identity
                     );
                 }
