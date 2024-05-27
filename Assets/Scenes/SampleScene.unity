@@ -444,6 +444,7 @@ MonoBehaviour:
   boxPrefab: {fileID: 486604178174395164, guid: 88eeb76c0e37f594c96636627cb26fa8, type: 3}
   goalPrefab: {fileID: 492120082075527678, guid: f0a024788a4c55d48afca6906e75735a, type: 3}
   wallPrefab: {fileID: 6992056596590299496, guid: 2a2680ed4ce513d499762b5ea1eb45c2, type: 3}
+  particlePrefab: {fileID: 7806935017692349861, guid: 9c8bde649152a2a4ab0032a275a66d87, type: 3}
   clearText: {fileID: 1622550633}
 --- !u!4 &1596545083
 Transform:
@@ -519,7 +520,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: GameClear!!
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 37c0de88cafa4494d91f1102be3a0fa2, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -583,7 +584,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1622550636

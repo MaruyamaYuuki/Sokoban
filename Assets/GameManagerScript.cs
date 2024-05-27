@@ -59,6 +59,7 @@ public class GameManagerScript : MonoBehaviour
             Debug.Log("null");
         }
         field[moveFrom.y, moveFrom.x].GetComponent<Move>().MoveTo(moveToPosition);
+
         field[moveFrom.y, moveFrom.x] = null;
         return true;
     }
@@ -100,12 +101,14 @@ public class GameManagerScript : MonoBehaviour
         Screen.SetResolution(1280, 720, false);
         // mapの生成
         map = new int[,] {
-          {0,0,0,0,0 },
-          {0,3,1,0,0,},
-          {0,0,2,0,0 },
-          {0,2,3,2,0 },
-          {4,0,0,0,0 },
-          {3,0,0,0,0 }
+          {4,4,4,4,4,4,4,4 },
+          {4,3,4,3,0,0,0,4 },
+          {4,3,4,4,0,4,0,4 },
+          {4,0,0,0,0,0,0,4 },
+          {4,0,4,4,2,2,0,4 },
+          {4,0,0,2,0,4,4,4 },
+          {4,0,0,0,0,0,1,4 },
+          {4,4,4,4,4,4,4,4 }
         };
         // フィールドサイズ決定
         field = new GameObject
@@ -158,6 +161,22 @@ public class GameManagerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        // リセットキーが押されたら
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            // プレイヤー、箱、テキストを非アクティブにする
+            foreach (GameObject obj in field)
+            {
+                if (obj != null)
+                {
+                    Destroy(obj);
+                }
+            }
+            clearText.SetActive(false);
+            // マップをリセットして再度描画する
+            Start();
+        }
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             Vector2Int playerIndex = GetPlayerIndex();
