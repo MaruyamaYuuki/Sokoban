@@ -9,6 +9,7 @@ public class GameManagerScript : MonoBehaviour
     public GameObject playerPrefab;
     public GameObject boxPrefab;
     public GameObject goalPrefab;
+    public GameObject wallPrefab;
 
     public GameObject clearText;
     int[,] map;
@@ -36,6 +37,10 @@ public class GameManagerScript : MonoBehaviour
         // 移動先が範囲外なら移動不可
         if (moveTo.y < 0 || moveTo.y >= field.GetLength(0)) { return false; }
         if (moveTo.x < 0 || moveTo.x >= field.GetLength(1)) { return false; }
+        // 移動先に4(壁)が居たら移動不可
+        if (field[moveTo.y, moveTo.x] != null && field[moveTo.y, moveTo.x].tag == "Wall") {
+            Debug.Log("壁に衝突");
+            return false; }
         // 移動先に2(箱)が居たら
         if (field[moveTo.y, moveTo.x] != null && field[moveTo.y, moveTo.x].tag == "Box")
         {
@@ -96,10 +101,11 @@ public class GameManagerScript : MonoBehaviour
         // mapの生成
         map = new int[,] {
           {0,0,0,0,0 },
-          {0,3,1,3,0,},
+          {0,3,1,0,0,},
           {0,0,2,0,0 },
           {0,2,3,2,0 },
-          {0,0,0,0,0 }
+          {4,0,0,0,0 },
+          {3,0,0,0,0 }
         };
         // フィールドサイズ決定
         field = new GameObject
@@ -134,6 +140,14 @@ public class GameManagerScript : MonoBehaviour
                     GameObject instance = Instantiate(
                         goalPrefab,
                         new Vector3(x, map.GetLength(0) - y, 0.01f) - centeroffset,
+                        Quaternion.identity
+                    );
+                }
+                if (map[y, x] == 4)
+                {
+                    field[y, x] = Instantiate(
+                        wallPrefab,
+                        new Vector3(x, map.GetLength(0) - y, 0.0f) - centeroffset,
                         Quaternion.identity
                     );
                 }
