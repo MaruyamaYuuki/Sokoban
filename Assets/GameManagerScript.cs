@@ -157,6 +157,7 @@ public class GameManagerScript : MonoBehaviour
                 }
             }
         }
+        resetText.SetActive(true);
     }
 
     // Update is called once per frame
