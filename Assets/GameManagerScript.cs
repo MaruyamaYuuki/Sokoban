@@ -12,6 +12,7 @@ public class GameManagerScript : MonoBehaviour
     public GameObject wallPrefab;
 
     public GameObject clearText;
+    public GameObject resetText;
     int[,] map;
     GameObject[,] field;
     Vector3 centeroffset;
@@ -161,7 +162,7 @@ public class GameManagerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        resetText.SetActive(true);
         // リセットキーが押されたら
         if (Input.GetKeyDown(KeyCode.R))
         {
